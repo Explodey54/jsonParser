@@ -20,11 +20,14 @@ class JsonForm extends Model
 
     public function getContents()
     {
-        $dir = Yii::getAlias('@app/uploads').'/'.$this->file->name;
-        $this->file->saveAs($dir);
-        $content = file_get_contents($dir);
-        unlink($dir);
+        if ($this->file) {
+            $dir = Yii::getAlias('@app/uploads').'/'.$this->file->name;
+            $this->file->saveAs($dir);
+            $content = file_get_contents($dir);
+            unlink($dir);
+            return $content;
+        }
 
-        return $content;
+        return false;
     }
 }
